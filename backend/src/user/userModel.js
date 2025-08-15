@@ -15,9 +15,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    friends: {
-        type: [mongoose.Schema.Types.ObjectId],
-    } 
 })
 
 export default mongoose.model('User', userSchema,'Users');

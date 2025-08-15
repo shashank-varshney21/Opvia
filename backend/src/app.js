@@ -3,7 +3,7 @@ import passport from 'passport';
 import session from 'express-session';
 import globalErrorHandler from './middleware/GlobalErrorHandler.js';
 import userRouter from './user/userRouter.js';
-import { googleStrategy } from './config/googleAuth.js';
+// import { googleStrategy } from './config/googleAuth.js';rrr
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Configure Google OAuth strategy
-passport.use(googleStrategy);
+// passport.use(googleStrategy); rrr
 
 // Serialize & deserialize user
 passport.serializeUser((user, done) => done(null, user));
