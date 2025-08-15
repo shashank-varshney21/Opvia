@@ -4,7 +4,8 @@ import postModel from "./postModel.js";
 // Create a Post
 const createPost = async (req, res, next) => {
     try {
-        const { userId, content } = req.body;
+        const { content } = req.body;
+        const userId = req.user?.sub; // Get userId from JWT
 
         if (!userId || !content) {
             return next(createHttpError(400, "User ID and content are required"));
@@ -18,6 +19,7 @@ const createPost = async (req, res, next) => {
         next(createHttpError(500, "Error creating post"));
     }
 };
+
 
 //  Get User Feed 
 const getUserFeed = async (req, res, next) => {

@@ -9,7 +9,7 @@ const _config = {
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
     sessionSecret: process.env.SESSION_SECRET,
     secret: process.env.SECRET,
-    env: DEVELOPMENT
+    env: process.env.NODE_ENV || "development",
 };
 
 export const config = Object.freeze(_config);

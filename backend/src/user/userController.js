@@ -45,10 +45,10 @@ const createUser = async (req, res, next) => {
         })
     });
 
-    const { err } = userSchema.validate(req.body);
+    const { error } = userSchema.validate(req.body);
 
-    if(err) {
-        return next(createHttpError(401, err instanceof Error ? err.message : 'Data Validation Failed'));
+    if(error) {
+        return next(createHttpError(401, error instanceof Error ? error.message : 'Data Validation Failed'));
     }
 
     //Check if user already exists in the database
@@ -117,7 +117,7 @@ const login = async(req, res, next) => {
     const { error } = schema.validate(req.body);
 
     if(error) {
-        return next(createHttpError('401', error.message));
+        return next(createHttpError(401, error.message));
     }
 
     //Check in the Database
@@ -128,16 +128,16 @@ const login = async(req, res, next) => {
         user = await userModel.findOne({ email });
     } catch (err) {
         console.error(err);
-        return next('Unable to fetch user', err);
+        return next(createHttpError(500, 'Unable to fetch user'));
     }
 
     if(!user) {
-        return next(createHttpError('401', 'No user exists'));
+        return next(createHttpError(401, 'No user exists'));
     }
 
     //Verify Password
 
-    const VerifyPassword = bcrypt.compare(password, user.password);
+    const VerifyPassword = await bcrypt.compare(password, user.password);
 
     if(!VerifyPassword) {
         return next(createHttpError(401, 'Password not matched'));

@@ -5,7 +5,7 @@ import globalErrorHandler from './middleware/GlobalErrorHandler.js';
 import userRouter from './user/userRouter.js';
 import { googleStrategy } from './config/googleAuth.js';
 import chatRoutes from './chat/chatRoutes.js';
-
+import postRouter from './post/postRoutes.js'
 const app = express();
 
 // Parse JSON
@@ -19,12 +19,12 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-
+ 
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Configure Google OAuth strategy
-// passport.use(googleStrategy); rrr
+passport.use(googleStrategy); 
 
 // Serialize & deserialize user
 passport.serializeUser((user, done) => done(null, user));
@@ -52,6 +52,7 @@ app.get('/', (req, res) => {
 
 // --- API Routes ---
 app.use('/api/users', userRouter);
+app.use('/api/posts', postRouter);
 
 // --- Global Error Handler ---
 app.use(globalErrorHandler);
