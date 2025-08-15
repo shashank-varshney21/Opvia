@@ -4,10 +4,7 @@ import session from 'express-session';
 import globalErrorHandler from './middleware/GlobalErrorHandler.js';
 import userRouter from './user/userRouter.js';
 import { googleStrategy } from './config/googleAuth.js';
-<<<<<<< HEAD
 import chatRoutes from './chat/chatRoutes.js';
-=======
->>>>>>> 72a98e0fd9d0a407381ccd77211ff18a4c6e984f
 
 const app = express();
 
