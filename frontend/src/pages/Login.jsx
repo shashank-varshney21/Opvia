@@ -44,7 +44,8 @@ export default function Login() {
           <button type="submit">Login</button>
         </form>
         <Link to="/signup">Don’t have an account? Sign Up</Link>
-        <a href="/auth/google" className="google-btn">
+        {/* FIX: Change the href to point to the correct backend URL */}
+        <a href="http://localhost:5000/auth/google" className="google-btn">
           Login with Google
         </a>
       </div>
