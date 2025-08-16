@@ -19,7 +19,7 @@ export default function Feed() {
 
   const createPost = async () => {
     if (!composer.trim()) return;
-    const { data } = await api.post("/api/posts", { content: composer });
+    const { data } = await api.post("/api/posts/", { content: composer });
     setComposer("");
     setPosts((p) => [data, ...p]);
   };

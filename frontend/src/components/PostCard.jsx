@@ -2,10 +2,11 @@
 import React from "react";
 
 export default function PostCard({ post, onLike, onComment }) {
+
   return (
     <div>
       <div>
-        <strong>{post.author?.name}</strong> • {new Date(post.createdAt).toLocaleString()}
+        <strong>{post.user?.Username}</strong> • {new Date(post.createdAt).toLocaleString()}
       </div>
       <p>{post.content}</p>
       {post.media && <img src={post.media} alt="" />}
@@ -24,7 +25,7 @@ export default function PostCard({ post, onLike, onComment }) {
         />
         <ul>
           {(post.comments || []).map((c) => (
-            <li key={c._id}><strong>{c.author?.name}:</strong> {c.text}</li>
+            <li key={c._id}><strong>{c.user?.Username}:</strong> {c.text}</li>
           ))}
         </ul>
       </div>

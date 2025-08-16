@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import createHttpError from "http-errors";
 import { config } from "../config/config.js";
 
-export const verifyJWT = (req, res, next) => {
+const verifyJWT = (req, res, next) => {
     try {
         // Check for token in Authorization header
         const authHeader = req.headers.authorization;
@@ -25,3 +25,5 @@ export const verifyJWT = (req, res, next) => {
         next(createHttpError(500, "Token verification failed"));
     }
 };
+
+export default verifyJWT;

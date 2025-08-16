@@ -13,9 +13,9 @@ export default function EditProfile() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get("/api/profile");
+      const { data } = await api.get("/api/users/profile");
       setForm({
-        name: data.name || "",
+        name: data.Username || "",
         about: data.about || "",
         skills: (data.skills || []).join(", "),
       });
@@ -25,7 +25,7 @@ export default function EditProfile() {
   const save = async () => {
     try {
       await api.put("/api/users/me", {
-        name: form.name,
+        Username: form.name,
         about: form.about,
         skills: form.skills.split(",").map((s) => s.trim()).filter(Boolean),
       });

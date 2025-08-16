@@ -7,7 +7,7 @@ export default function Profile() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get("/api/profile");
+      const { data } = await api.get("/api/users/profile");
       setMe(data);
     })();
   }, []);
@@ -18,7 +18,7 @@ export default function Profile() {
     <div>
       <h2>My Profile</h2>
       {me.profilePic && <img src={me.profilePic} alt="" width={96} height={96} />}
-      <div>Name: {me.name}</div>
+      <div>Name: {me.Username}</div>
       <div>Email: {me.email}</div>
       <div>Role: {me.role}</div>
       <div>About: {me.about}</div>

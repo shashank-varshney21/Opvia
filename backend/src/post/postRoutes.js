@@ -1,11 +1,20 @@
-import express from 'express';
-import { createPost, getUserFeed } from './postController.js';
-import { verifyJWT } from '../middleware/userMiddleware.js';
+import express from "express";
+import {
+    createPost,
+    getUserFeed,
+    likePost,
+    addComment,
+} from "./postController.js";
+import verifyJWT from "../middleware/userMiddleware.js";
 
-const postRouter = express.Router();
+const postRoutes = express.Router(); 
 
-postRouter.post('/', verifyJWT, createPost);
-postRouter.get('/feed', verifyJWT, getUserFeed);
+postRoutes.post("/", verifyJWT, createPost);
 
-export default postRouter;
- 
+postRoutes.get("/feed", verifyJWT, getUserFeed);
+
+postRoutes.post("/:postId/like", verifyJWT, likePost);
+
+postRoutes.post("/:postId/comment", verifyJWT, addComment);
+
+export default postRoutes;

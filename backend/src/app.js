@@ -2,16 +2,26 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import globalErrorHandler from './middleware/GlobalErrorHandler.js';
-import userRouter from './user/userRouter.js';
 import { googleStrategy } from './config/googleAuth.js';
 import chatRoutes from './chat/chatRoutes.js';
-import postRouter from './post/postRoutes.js'
+import postRoutes from './post/postRoutes.js'
+import authRoutes from './auth/authRoutes.js';
+import userRoutes from './user/userRoutes.js';
+import notificationRoutes from './notification/notificationRoutes.js';
+import dashboardRoutes from './dashboard/dashboardRoutes.js';
+
+import cors from "cors";
+
 const app = express();
+
+app.use(cors({
+  origin: "http://localhost:5173", // frontend URL
+  credentials: true
+}));
 
 // Parse JSON
 app.use(express.json());
 
-app.use("/api/chat", chatRoutes);
 
 // --- Session & Passport Setup ---
 app.use(session({
@@ -19,7 +29,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
- 
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -51,8 +61,12 @@ app.get('/', (req, res) => {
 });
 
 // --- API Routes ---
-app.use('/api/users', userRouter);
-app.use('/api/posts', postRouter);
+app.use('/api/auth', authRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/users', userRoutes);
 
 // --- Global Error Handler ---
 app.use(globalErrorHandler);

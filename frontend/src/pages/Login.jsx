@@ -1,4 +1,4 @@
-// src/pages/Login.jsx
+
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
@@ -14,12 +14,12 @@ export default function Login() {
 
   const submit = async () => {
     try {
-      const { data } = await api.post("/api/login", { email, password });
+      const { data } = await api.post("/api/auth/login", { email, password });
       localStorage.setItem("token", data.token);
       await refresh();
-      navigate("/feed");
+      navigate("/feed"); 
     } catch (e) {
-      alert("Login failed");
+       alert(e.response?.data?.message || "Login failed");
     }
   };
 
