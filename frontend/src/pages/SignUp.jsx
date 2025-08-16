@@ -11,14 +11,16 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const submit = async () => {
-    try {
-      await api.post("/api/register", { name, email, password });
-      navigate("/login");
-    } catch {
-      alert("Registration failed");
-    }
-  };
+const submit = async () => {
+  try {
+    const response = await api.post("/api/auth/register", { name, email, password });
+    navigate("/login");
+  } catch (err) {
+    const message = err.response?.data?.message || err.response?.data?.error || err.message;
+    alert(`Registration failed: ${message}`);
+  }
+};
+
 
   return (
     <div>

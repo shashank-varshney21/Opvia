@@ -36,14 +36,17 @@ const Protected = ({ children, user }) => {
 // New component to handle authentication state and navigation
 function AuthWrapper() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const loadMe = async () => {
     try {
-      const { data } = await api.get("/api/profile");
+      const { data } = await api.get("/api/users/profile"); // ✅ use your correct endpoint
       setUser(data);
     } catch {
       setUser(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,6 +60,8 @@ function AuthWrapper() {
     navigate("/login");
   };
 
+  if (loading) return <div>Loading...</div>; // ⏳ prevent flicker
+
   return (
     <AuthContext.Provider value={{ user, setUser, refresh: loadMe }}>
       <Navbar user={user} onLogout={handleLogout} />
@@ -65,66 +70,21 @@ function AuthWrapper() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route
-            path="/onboarding"
-            element={<Protected user={user}><OnboardingWizard /></Protected>}
-          />
-          <Route
-            path="/profile"
-            element={<Protected user={user}><Profile /></Protected>}
-          />
-          <Route
-            path="/edit-profile"
-            element={<Protected user={user}><EditProfile /></Protected>}
-          />
-          <Route
-            path="/dashboard"
-            element={<Protected user={user}><Dashboard /></Protected>}
-          />
-          <Route
-            path="/feed"
-            element={<Protected user={user}><Feed /></Protected>}
-          />
-          <Route
-            path="/create-post"
-            element={<Protected user={user}><CreatePost /></Protected>}
-          />
-          <Route
-            path="/jobs"
-            element={<Protected user={user}><Jobs /></Protected>}
-          />
-          <Route
-            path="/jobs/:id"
-            element={<Protected user={user}><JobDetails /></Protected>}
-          />
-          <Route
-            path="/post-job"
-            element={<Protected user={user}><PostJob /></Protected>}
-          />
-          <Route
-            path="/connections"
-            element={<Protected user={user}><Connections /></Protected>}
-          />
-          <Route
-            path="/suggestions"
-            element={<Protected user={user}><Suggestions /></Protected>}
-          />
-          <Route
-            path="/users/:id"
-            element={<Protected user={user}><UserProfileView /></Protected>}
-          />
-          <Route
-            path="/notifications"
-            element={<Protected user={user}><Notifications /></Protected>}
-          />
-          <Route
-            path="/settings"
-            element={<Protected user={user}><Settings /></Protected>}
-          />
-          <Route
-            path="/chat"
-            element={<Protected user={user}><ChatWindow /></Protected>}
-          />
+          <Route path="/onboarding" element={<Protected user={user}><OnboardingWizard /></Protected>} />
+          <Route path="/profile" element={<Protected user={user}><Profile /></Protected>} />
+          <Route path="/edit-profile" element={<Protected user={user}><EditProfile /></Protected>} />
+          <Route path="/dashboard" element={<Protected user={user}><Dashboard /></Protected>} />
+          <Route path="/feed" element={<Protected user={user}><Feed /></Protected>} />
+          <Route path="/create-post" element={<Protected user={user}><CreatePost /></Protected>} />
+          <Route path="/jobs" element={<Protected user={user}><Jobs /></Protected>} />
+          <Route path="/jobs/:id" element={<Protected user={user}><JobDetails /></Protected>} />
+          <Route path="/post-job" element={<Protected user={user}><PostJob /></Protected>} />
+          <Route path="/connections" element={<Protected user={user}><Connections /></Protected>} />
+          <Route path="/suggestions" element={<Protected user={user}><Suggestions /></Protected>} />
+          <Route path="/users/:id" element={<Protected user={user}><UserProfileView /></Protected>} />
+          <Route path="/notifications" element={<Protected user={user}><Notifications /></Protected>} />
+          <Route path="/settings" element={<Protected user={user}><Settings /></Protected>} />
+          <Route path="/chat" element={<Protected user={user}><ChatWindow /></Protected>} />
         </Routes>
       </div>
     </AuthContext.Provider>
