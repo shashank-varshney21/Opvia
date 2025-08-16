@@ -6,6 +6,16 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* New: Ensure html and body take up full viewport height and use Flexbox for layout */
+html, body, #root {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Navbar */
 .navbar {
   background-color: #143d8c;
@@ -14,7 +24,8 @@
   justify-content: space-between;
   align-items: center;
   color: white;
-  position: fixed;
+  /* Fix: Use 'sticky' instead of 'fixed' to keep it in the page flow and prevent it from overlapping content. */
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -56,9 +67,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* Fix: Set min-height to 100vh to ensure it fills the viewport, even with little content. */
+  min-height: 100vh;
   background-color: #f7f9fc;
-  padding-top: 60px; /* keeps it below navbar */
 }
 
 .login-box {
@@ -122,8 +133,10 @@
   background: #b7352a;
 }
 
-/* Push content down so it’s not hidden behind fixed navbar */
+/* Fix: Allow the main content to grow and push the footer down (if you had one).
+   A margin-top is still needed to push content below the sticky navbar. */
 .main-content {
-  margin-top: 80px; /* adjust to navbar height */
-  padding: 20px;
+    flex-grow: 1;
+    margin-top: 56px; /* A fixed navbar needs content to be pushed down. 56px is an estimate of the navbar height. You may need to adjust this value to fit your navbar's final height. */
+    padding: 20px;
 }
