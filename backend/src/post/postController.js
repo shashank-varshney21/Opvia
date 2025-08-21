@@ -215,6 +215,7 @@ const likePost = async (req, res, next) => {
 
     const postLikers = post.likedBy;
 
+    //If the user unlikes
     if (postLikers.includes(userId)) {
         const updatedPostLikers = postLikers.filter(Liker => Liker!==userId);
         const like = post.like - 1;
@@ -237,7 +238,7 @@ const likePost = async (req, res, next) => {
         } catch (err) {
             return next(createHttpError(400, err instanceof Error ? err.message : 'database Error'));
         }
-    } else {
+    } else { //If the user likes
 
     postLikers.push(userId);
 
